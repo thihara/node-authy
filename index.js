@@ -74,6 +74,29 @@ Authy.prototype.verify = function (id, token, force, callback) {
     this._request("get", "/protected/json/verify/" + querystring.escape(cleanToken) + "/" + querystring.escape(id), {}, check_body_callback, qs);
 };
 
+Authy.prototype.verify_one_touch = function (uuid, callback) {
+    var url = "/onetouch/json/approval_requests/"+querystring.escape(uuid);
+
+    this._request("get", url, {}, callback);
+};
+
+Authy.prototype.request_one_touch = function (id, message, details, hidden_details, logos, seconds_to_expire, callback) {
+    var url = "/onetouch/json/users/"+ querystring.escape(id) +"/approval_requests";
+    
+    //If all arguments are not provided, the last one is considered the callback function.
+    if(arguments.length != 7){
+        callback = arguments[arguments.length -1];
+    }
+    
+    this._request("post", url, {
+        details: details,
+        hidden_details: hidden_details,
+        message: message,
+        logos: logos,
+        seconds_to_expire: seconds_to_expire
+    }, callback);
+};
+
 Authy.prototype.request_sms = function (id, force, callback) {
     var qs = {};
 
