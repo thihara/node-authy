@@ -54,6 +54,22 @@ authy.verify('1337', '0000000', function (err, res) {
 });
 ```
 
+Verify One Touch
+----------------
+
+verify_one_touch(uuid, callback)
+
+```javascript
+authy.verify_one_touch(uuid, function(err, response) {
+    if (err) {
+        console.error(err);
+    }
+
+    var status = response.approval_request.status;
+    console.log(status);
+});
+```
+
 Request SMS
 -----------
 
@@ -64,6 +80,25 @@ authy.request_sms('1337', function (err, res) {
 
 });
 ```
+
+Request OneTouch
+----------------
+request_one_touch(id, message, [details], [hidden_details], [logos], [seconds_to_expire], callback)
+
+```javascript
+authy.request_one_touch('1337', 'Please approve this request', function(err, res) {
+
+});
+```
+
+
+`details` and `hidden_details` are dictionaries. Basically
+
+```javascript
+    var details = {};
+    details["E-Mail"] = "tneranjya@doesnotexist.com"
+```
+
 
 Request Call (Email support@authy.com to enable this feature)
 -------------------------------------------------------------
